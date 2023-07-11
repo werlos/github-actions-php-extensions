@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php-version }} ${{ matrix.description }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            description: 'on Ubuntu'
+          - os: ubuntu-latest
+            description: 'on Ubuntu (with none)'
+            extensions-none: 'none,'
+          - os: windows-latest
+            description: 'on Windows'
+          - os: windows-latest
+            description: 'on Windows (with none)'
+            extensions-none: 'none,'
+          - os: macos-latest
+            description: 'on macOS'
+          - os: macos-latest
+            description: 'on macOS (with none)'
+            extensions-none: 'none,'
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: ${{ matrix.extensions-none }} curl, opcache, :mbstring
+
+      - run: php -m
+
+      - run: php -m | wc -l
