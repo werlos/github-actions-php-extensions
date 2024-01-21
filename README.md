@@ -9,4 +9,4 @@
 | macOS   | curl, opcache, :mbstring       | 69 |  yes   | yes      | yes       | yes
 | macOS   | none, curl, opcache, :mbstring | 67 |  yes   | no       | yes       | yes
 
-`#` is result of `php -m | wc -l`
+`#` is the result of `php -m | wc -l`
